@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if name is provided
     if (!empty($name)) {
         // Fetch user information based on the name
-        $stmt = $conn->prepare("SELECT name, user, pass, bio FROM signup WHERE name = ?");
+        $stmt = $conn->prepare("SELECT name, user, age, bio FROM signup WHERE name = ?");
         $stmt->bind_param("s", $name); // Bind the name parameter
         $stmt->execute();
         $result = $stmt->get_result();
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Store fetched user info in session
             $row = $result->fetch_assoc();
             
-            $pass = $_SESSION['pass'];
+            $age = $_SESSION['age'];
             $bio = $_SESSION['bio'];
         } else {
             echo "User with the given name not found.";
@@ -194,7 +194,7 @@ body {
                         echo $user; ?>">
             </div>
             <div class="input-box">
-                <input type="password" id="pass" name="pass" value="<?php echo isset($_SESSION['pass']) ? htmlspecialchars($_SESSION['pass']) : ''; ?>" >
+              <input name="age" type="number" min="15" max="100" id="age" value="<?php echo isset($_SESSION['age']) ? htmlspecialchars($_SESSION['age']) : ''; ?>">
             </div>
             <div class="input-box">
                 <input type="text" id="bio" name="bio" value="<?php echo isset($_SESSION['bio']) ? htmlspecialchars($_SESSION['bio']) : ''; ?>" placeholder="Bio">
